@@ -1,0 +1,191 @@
+* iPython notes
+
+** Help
+
+*** help command
+
+> help(len)
+
+*** ? command - on functions (built-in or user-defined) , methods or even vars
+
+> len?
+> def square(a):
+    """Return the square of a.""""
+    return a ** 2
+
+
+> L = [1,2,3,4]
+> L.insert?
+> L?
+> square?
+
+*** ?? - accessing source code
+
+> square??
+.
+.
+def square(a):
+    """Return the square of a.""""
+    return a ** 2
+
+*** Using Python built-in dir() 
+
+> dir(len)
+
+*** Tab completion
+
+   > L.<TAB>
+   # Shows all member funcs defined on L
+
+   * By default, _ attrs arent shown unless we type _ + <TAB>
+
+**** Tab completion when importing
+
+> from itertools import co<TAB>
+  # combinations compress combinations_with_replacement count
+
+> import <TAB>
+  # Shows all modules available to import
+
+> import h<TAB>
+
+hashlib hmac http heapq html husl
+
+*** Wildcard matching 
+
+> *Warning?
+
+# Shows all objects that end in Warning
+
+> str.*find*
+
+# Shows all str methods that contain find
+
+** iPython keyboard shortcuts
+
+   * C-a : Move cursor to start of line
+   * C-e : Move cursor to end of line
+   * C-b (or left arrow) : Move cursor back one char
+   * C-f (or rite arrow) : Move cursor fwd  one char
+   * Backspace : Delete prev char in line
+   * C-d : Delete next char in line
+   * C-k : Cut text from cursor to end of line
+   * C-u : Cut text from start of line to cursor
+   * C-y : Yank (ie paste) txt that ws previosuly cut
+   * C-t : Transpose: switch prev 2 chars
+   * C-p (or UP) : access prev cmd in history 
+   * C-n (or DOWN) : access next cmd in history 
+   * C-r : reverse-search thru cmd history
+   * C-l : Clear termi screen
+   * C-c : Interrupt curr Py cmd
+   * C-d : Exit ipython session (???)
+
+** Magic Commands
+
+Prefixed by '%' char. Two types:
+
+   * Line magics: % - op on single line
+   * Cell Magics: %% - operate on multiple lines
+
+*** %paste : Handles multiline marked up python code 
+
+Enables Pasting from Python interpreter - including >>> and .... preamble
+
+Both enters and executes the source code
+
+*** %cpaste - like %paste but doesnt exec code
+
+*** %run - Running external code
+
+If you've got py code in myscript.py
+
+> %run myscript.py
+
+Any funcs defined are now available
+
+Several options to %run - type %run? to get further help
+
+*** %timeit - Timing code execution
+
+> %timeit L = [n ** 2 for n in range(1000)] 
+1000 loops, best of 3: 325 μs per loop
+
+%timeit will run multiple times to get the avg runtime.
+
+Use %%timeit for multiline statements
+
+%%timeit
+L = []
+for n in range(1000):
+    L.append(n ** 2)
+
+*** Help on magic functions
+
+**** ? suffix : ie %%timeit?
+
+**** %magic
+
+**** %lsmagic
+
+** In / Out History
+
+Python stores all inputs in In list, and outputs in Out list.
+Note: some commands (import, print) don't populate Out
+
+So if you run:
+
+
+In [1]: import math 
+
+In [2]: math.sin(2)
+Out[2]: 0.9092974268256817
+
+In [3]: math.cos(2)
+Out[3]: -0.4161468365471424
+
+Its possible to reuse the sin(2) and cos(2) outputs - these sum to 1 when squared:
+
+Out[2] ** 2 + Out[3] ** 2
+
+** Underscore Shortcuts / Previous Outputs
+
+Std py uses _ to refer to prev output
+iPython supports double and triple underscore as well
+
+*** Shortcut for Out[X]
+
+   * Use _X (ie _3 => math.cos(2) output from prior example)
+
+** Suppressing Output
+
+Easiest way: Add ';' to stmt to suppress output
+
+
+** History related magic commands
+
+*** %history -n <ST>-<END>
+
+Display history starting from command number ST until commmand number <END>
+
+*** %%rerun
+
+Re-execute some part of the cmd history
+
+*** %save
+
+Save some set of cmd history to a file
+
+** Shell Command Interface
+
+!<SHELL COMMAND> : executed by system command line
+
+   * !ls, !pwd etc
+
+*** Save shell cmd output to Python list
+
+> contents = !ls
+> cwd = !pwd
+
+Note: note returned as lists but as special IPython.utils.text.SList
+> type(cwd)
+IPython.utils.text.SList
